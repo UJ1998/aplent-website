@@ -1,3 +1,10 @@
+grecaptcha.ready(function() {
+    grecaptcha.execute('6Lf4FEEtAAAAAL9ME_8MaOAj3Agxbf1EdOJgCTfN', {action: 'submit'})
+      .then(function(token) {
+         console.log(token);
+      });
+});
+
 $(function() {
 
   $("#contactForm input,#contactForm textarea").jqBootstrapValidation({
