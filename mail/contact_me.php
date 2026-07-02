@@ -10,6 +10,23 @@ if(empty($_POST['name'])      ||
    return false;
    }
    
+   $secret = "6Lf4FEEtAAAAAFU-DWb8kt-3oIUitpZdX-HawyKE";
+   $captcha = $_POST["g-recaptcha-response"];
+
+   $verify = file_get_contents(
+   "https://www.google.com/recaptcha/api/siteverify?secret="
+   . $secret . "&response=" . $captcha
+   );
+
+   $response = json_decode($verify);
+
+   if ($response->success) {
+      // Send the email continue
+   } else {
+      echo "Captcha failed";
+      return false;
+   }
+
 $name = strip_tags(htmlspecialchars($_POST['name']));
 $email_address = strip_tags(htmlspecialchars($_POST['email']));
 $phone = strip_tags(htmlspecialchars($_POST['phone']));
