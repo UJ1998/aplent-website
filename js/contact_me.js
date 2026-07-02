@@ -1,10 +1,3 @@
-grecaptcha.ready(function() {
-    grecaptcha.execute('6Lf4FEEtAAAAAL9ME_8MaOAj3Agxbf1EdOJgCTfN', {action: 'submit'})
-      .then(function(token) {
-         console.log(token);
-      });
-});
-
 $(function() {
 
   $("#contactForm input,#contactForm textarea").jqBootstrapValidation({
@@ -14,6 +7,16 @@ $(function() {
     },
     submitSuccess: function($form, event) {
       event.preventDefault(); // prevent default submit behaviour
+      grecaptcha.ready(function () {
+              grecaptcha.execute('6Lf4FEEtAAAAAL9ME_8MaOAj3Agxbf1EdOJgCTfN', { action: 'submit' })
+                  .then(function(token) {
+
+                      document.getElementById("captchaToken").value = token;
+
+                      document.getElementById("contactForm").submit();
+                  });
+          });
+
       // get values from FORM
       var name = $("input#name").val();
       var email = $("input#email").val();
@@ -25,7 +28,7 @@ $(function() {
         firstName = name.split(' ').slice(0, -1).join(' ');
       }
        // captcha validation
-      let captchaToken = grecaptcha.getResponse();
+      // let captchaToken = grecaptcha.getResponse();
 
       if (!captchaToken) {
           $('#success').html("<div class='alert alert-danger'>");
